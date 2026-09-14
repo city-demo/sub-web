@@ -13,7 +13,8 @@
     "lint": "eslint --ext .js,.vue src",
     "deploy": "vite build && wrangler deploy",
     "worker:dev": "wrangler dev",
-    "preview:worker": "vite build && wrangler dev"
+    "preview:worker": "vite build && wrangler dev",
+    "postinstall": "vite build"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
