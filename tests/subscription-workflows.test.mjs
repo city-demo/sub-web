@@ -317,12 +317,13 @@ test('formatVersion extracts subconverter version and rejects HTML responses', (
 
 test('BackendService.getBackendVersion handles HTML responses and network errors silently', async () => {
   const htmlAxios = { get: async () => ({ data: '<!DOCTYPE html><html><body>app</body></html>' }) }
-  assert.equal(await BackendService.getBackendVersion(htmlAxios), '')
+  assert.equal(await BackendService.getBackendVersion(htmlAxios, 'https://backend.example/sub?'), '')
 
   const failingAxios = { get: async () => { throw new Error('502 Bad Gateway') } }
-  assert.equal(await BackendService.getBackendVersion(failingAxios), '')
+  assert.equal(await BackendService.getBackendVersion(failingAxios, 'https://backend.example/sub?'), '')
 
   const successAxios = { get: async () => ({ data: 'subconverter v0.9.0 backend\n' }) }
-  assert.equal(await BackendService.getBackendVersion(successAxios), 'v0.9.0')
+  assert.equal(await BackendService.getBackendVersion(successAxios, 'https://backend.example/sub?'), 'v0.9.0')
+  assert.equal(await BackendService.getBackendVersion(successAxios, ''), '')
 })
 

@@ -403,7 +403,9 @@ export default {
     },
 
     goToProject() {
-      window.open(CONSTANTS.PROJECT);
+      if (CONSTANTS.PROJECT) {
+        window.open(CONSTANTS.PROJECT);
+      }
     },
 
     gotoGayhub() {

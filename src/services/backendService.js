@@ -10,13 +10,13 @@ export class BackendService {
    * @param {Object} $axios - Axios实例
    * @returns {Promise<string>} 版本信息
    */
-  static async getBackendVersion($axios) {
-    if (!CONSTANTS.DEFAULT_BACKEND || !CONSTANTS.DEFAULT_BACKEND.startsWith('http')) {
+  static async getBackendVersion($axios, backend = CONSTANTS.DEFAULT_BACKEND) {
+    if (!backend || !backend.startsWith('http')) {
       return ''
     }
 
     // 提取版本 API 路径
-    const versionApiUrl = CONSTANTS.DEFAULT_BACKEND.substring(0, CONSTANTS.DEFAULT_BACKEND.length - 5) + '/version'
+    const versionApiUrl = backend.substring(0, backend.length - 5) + '/version'
 
     try {
       const response = await $axios.get(versionApiUrl)
