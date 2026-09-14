@@ -22,10 +22,15 @@ export const formatErrorMessage = (error) => {
  * @returns {string} 清理后的版本信息
  */
 export const formatVersion = (version) => {
-  let cleaned = version.replace(/backend\n$/gm, "");
-  cleaned = cleaned.replace("subconverter", "");
-  return cleaned;
-};
+  if (typeof version !== 'string') return ''
+  const trimmed = version.trim()
+  if (trimmed.startsWith('<') || trimmed.toLowerCase().includes('<!doctype') || trimmed.toLowerCase().includes('<html')) {
+    return ''
+  }
+  let cleaned = version.replace(/backend[\r\n]*$/gm, '')
+  cleaned = cleaned.replace('subconverter', '')
+  return cleaned.trim()
+}
 
 /**
  * 处理订阅链接（去除换行符）

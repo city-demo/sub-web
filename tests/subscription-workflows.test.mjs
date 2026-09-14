@@ -10,6 +10,8 @@ const { useSubscription, createSubscriptionForm } = await server.ssrLoadModule('
 const { useGeneratedLinks } = await server.ssrLoadModule('/src/composables/useGeneratedLinks.js')
 const { ConfigUploadService } = await server.ssrLoadModule('/src/services/configUploadService.js')
 const { ShortUrlService } = await server.ssrLoadModule('/src/services/shortUrlService.js')
+const { BackendService } = await server.ssrLoadModule('/src/services/backendService.js')
+const { formatVersion } = await server.ssrLoadModule('/src/utils/formatters.js')
 const { makeUrl, parseUrl } = useSubscription('https://default.example/sub?')
 
 
@@ -302,3 +304,25 @@ test('short-link resolution checks query parameters instead of the target substr
     }
   )
 })
+
+test('formatVersion extracts subconverter version and rejects HTML responses', () => {
+  assert.equal(formatVersion('subconverter v0.9.0 backend\n'), 'v0.9.0')
+  assert.equal(formatVersion('subconverter v0.8.1'), 'v0.8.1')
+  assert.equal(formatVersion('<!DOCTYPE html><html><body>index</body></html>'), '')
+  assert.equal(formatVersion('<html><head></head><body>error</body></html>'), '')
+  assert.equal(formatVersion('   <div id="app"></div>   '), '')
+  assert.equal(formatVersion(null), '')
+  assert.equal(formatVersion(undefined), '')
+})
+
+test('BackendService.getBackendVersion handles HTML responses and network errors silently', async () => {
+  const htmlAxios = { get: async () => ({ data: '<!DOCTYPE html><html><body>app</body></html>' }) }
+  assert.equal(await BackendService.getBackendVersion(htmlAxios), '')
+
+  const failingAxios = { get: async () => { throw new Error('502 Bad Gateway') } }
+  assert.equal(await BackendService.getBackendVersion(failingAxios), '')
+
+  const successAxios = { get: async () => ({ data: 'subconverter v0.9.0 backend\n' }) }
+  assert.equal(await BackendService.getBackendVersion(successAxios), 'v0.9.0')
+})
+

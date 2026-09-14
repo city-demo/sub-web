@@ -1,14 +1,19 @@
+const rawBackend = import.meta.env.VITE_SUBCONVERTER_DEFAULT_BACKEND
+const defaultBackend = rawBackend
+  ? (rawBackend.replace(/\/+$/, '') + '/sub?')
+  : 'https://api.wcc.best/sub?'
+
 // 项目常量定义
 export const CONSTANTS = {
-  PROJECT: import.meta.env.VITE_PROJECT,
+  PROJECT: import.meta.env.VITE_PROJECT || 'https://github.com/CareyWang/sub-web',
   REMOTE_CONFIG_SAMPLE: import.meta.env.VITE_SUBCONVERTER_REMOTE_CONFIG,
   DOC_ADVANCED: import.meta.env.VITE_SUBCONVERTER_DOC_ADVANCED,
   BACKEND_RELEASE: import.meta.env.VITE_BACKEND_RELEASE,
-  DEFAULT_BACKEND: import.meta.env.VITE_SUBCONVERTER_DEFAULT_BACKEND + '/sub?',
+  DEFAULT_BACKEND: defaultBackend,
   SHORT_URL_API: import.meta.env.VITE_MYURLS_API,
   CONFIG_UPLOAD_API: import.meta.env.VITE_CONFIG_UPLOAD_API,
   BOT_LINK: import.meta.env.VITE_BOT_LINK,
   DEFAULT_CLIENT_TYPE: 'clash',
   BUTTON_WIDTH: '140px',
   LARGE_BUTTON_WIDTH: '290px'
-};
+}
