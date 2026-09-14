@@ -18,10 +18,28 @@
 - 短链接与配置文件上传集成
 - 一键导入 Clash
 - Docker 一键部署
+- Cloudflare Workers 边缘一键部署（Workers Static Assets 原生托管）
 
 ## 🚀 快速开始
 
-### 使用 Docker（推荐）
+### 部署到 Cloudflare Workers（推荐）
+
+本项目原生支持部署到 [Cloudflare Workers](https://workers.cloudflare.com/) 边缘网络，无需自有服务器，享受全球 CDN 加速与 SPA 自动回退：
+
+```bash
+# 1. 安装依赖
+yarn install
+
+# 2. 登录 Cloudflare（首次运行）
+npx wrangler login
+
+# 3. 构建并一键发布
+yarn deploy
+```
+
+> 📖 详细配置、自定义域名绑定与反代配置请参考 [Cloudflare Workers 部署文档](docs/cloudflare-workers.md)。
+
+### 使用 Docker
 
 ```bash
 docker run -d \
@@ -46,7 +64,7 @@ yarn dev
 
 ## 📦 环境要求
 
-- **Node.js**: 24.x
+- **Node.js**: 24.x（Cloudflare Wrangler 要求 Node.js >= 22.x）
 - **Yarn**: 1.22+
 - **Docker**: 20.10+（可选）
 
@@ -57,6 +75,8 @@ yarn dev
 | `yarn dev` | 启动开发服务器 |
 | `yarn build` | 构建生产版本 |
 | `yarn preview` | 本地预览构建产物 |
+| `yarn deploy` | 构建生产版本并一键发布至 Cloudflare Workers |
+| `yarn preview:worker` | 构建产物并使用 Wrangler 本地模拟 Worker 运行环境 |
 | `yarn lint` | ESLint 代码检查 |
 
 ## ⚙️ 环境配置

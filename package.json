@@ -9,7 +9,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "deploy": "vite build && wrangler deploy",
+    "worker:dev": "wrangler dev",
+    "preview:worker": "vite build && wrangler dev"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -26,6 +29,7 @@
     "eslint-plugin-vue": "^9.33.0",
     "sass": "^1.101.0",
     "unplugin-element-plus": "^0.11.2",
-    "vite": "^8.1.0"
+    "vite": "^8.1.0",
+    "wrangler": "^4.131.1"
   }
 }

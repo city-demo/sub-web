@@ -19,6 +19,8 @@ Vue 3 + Vite 8 SPA with Element Plus. Keep changes small, follow existing patter
 | `yarn dev` | Start dev server (host: 0.0.0.0) |
 | `yarn build` | Production build |
 | `yarn preview` | Preview production build locally |
+| `yarn deploy` | Build and deploy to Cloudflare Workers |
+| `yarn preview:worker` | Preview with local Cloudflare Worker environment |
 | `yarn lint` | ESLint check |
 | `node --test tests/subscription-workflows.test.mjs` | Subscription workflow regression tests |
 
