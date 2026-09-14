@@ -2,6 +2,7 @@
   "name": "sub-web",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": ">=22.x"
   },
