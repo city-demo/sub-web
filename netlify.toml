@@ -1,0 +1,5 @@
+# Netlify 单页应用 (SPA) 路由重定向配置
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
